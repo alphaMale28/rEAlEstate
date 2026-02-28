@@ -1,0 +1,53 @@
+@use "../../responsive.scss" as *;
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    h1 {
+        font-weight: 300;
+        font-size: 24px;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    lable {
+        font-size: 10px;
+    }
+
+    input,
+    select {
+        width: 100px;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .top {
+        input {
+            width: 100%;
+        }
+    }
+
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        width: 150px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 0;
+        font-size: 18px;
+        background-color: $button-color;
+        color: $text-color;
+        cursor: pointer;
+    }
+}
