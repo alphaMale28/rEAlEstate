@@ -1,0 +1,106 @@
+@use "../../responsive.scss" as *;
+
+.searchBar {
+    padding-right: 140px;
+
+    @include xxl {
+        padding-right: 45px;
+    }
+
+    @include md {
+        padding-right: 0;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    .type {
+        button {
+            padding: 12px 26px;
+            border: 1px solid rgb(156, 156, 156);
+            border-bottom: 0;
+
+            &.active {
+                background-color: $button-color;
+                color: $text-color;
+                border: 1px solid $button-color;
+                border-bottom: 0;
+            }
+
+            &:first-child {
+                border-top-left-radius: 5px;
+                border-right: 1px solid $primary-color;
+            }
+
+            &:last-child {
+                border-top-right-radius: 5px;
+            }
+        }
+    }
+
+    form {
+        .inputs {
+            border: 1px solid #999;
+            border-radius: 5px;
+            border-top-left-radius: 0;
+            display: flex;
+            justify-content: space-between;
+
+            @include lg {
+                flex-direction: column;
+                justify-content: flex-start;
+                border: 0px;
+                gap: 2px;
+            }
+
+            input {
+                height: 64px;
+                border: 0;
+                padding: 0px 10px;
+                width: 160px;
+
+                @include xl {
+                    width: 120px;
+                }
+
+                @include lg {
+                    width: auto;
+                    border: 1px solid #999;
+                    border-radius: 5px;
+                }
+
+                &:first-child {
+                    width: 320px;
+                    border-bottom-left-radius: 5px;
+
+                    @include xl {
+                        width: 280px;
+                    }
+
+                    @include lg {
+                        width: auto;
+                        border-top-left-radius: 0;
+                    }
+                }
+
+                &:last-child {
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+            }
+        }
+
+        button {
+            padding: 12px 36px;
+            border-radius: 5px;
+            margin-top: 2px;
+            border: 0;
+            background-color: $button-color;
+            color: $text-color;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+}

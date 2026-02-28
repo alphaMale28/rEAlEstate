@@ -1,0 +1,44 @@
+$primary-color: #052c39;
+// $primary-color: #074b5f;
+$secondary-color: #c2dedc;
+$accent-color: #e2a16f;
+$notification-color: #78c841;
+$text-color: #c4e0e8;
+$button-color: #1c77b0;
+$two-color: #7bbacc;
+
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+@mixin sm {
+    @media (max-width: $sm) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (max-width: $md) {
+        @content;
+    }
+}
+
+@mixin lg {
+    @media (max-width: $lg) {
+        @content;
+    }
+}
+
+@mixin xl {
+    @media (max-width: $xl) {
+        @content;
+    }
+}
+
+@mixin xxl {
+    @media (max-width: $xxl) {
+        @content;
+    }
+}
