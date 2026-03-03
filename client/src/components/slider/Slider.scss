@@ -1,0 +1,95 @@
+@use "../../responsive.scss" as *;
+
+.slider {
+    display: flex;
+    gap: 15px;
+    height: 420px;
+    width: 100%;
+
+    // ================= BIG IMAGE =================
+    .bigImage {
+        flex: 3;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.4s ease;
+        }
+
+        &:hover img {
+            transform: scale(1.05);
+        }
+    }
+
+    // ================= THUMBNAILS =================
+    .smallImages {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-height: 100%;
+        overflow-y: auto;
+        padding-right: 5px;
+        padding-bottom: 12px;
+
+        // Custom scrollbar (optional clean look)
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $accent-color;
+            border-radius: 10px;
+        }
+
+        img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            opacity: 0.85;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.274);
+
+            transition: all 0.3s ease;
+
+            &:hover {
+                opacity: 1;
+                transform: scale(1.03);
+                border: 2px solid $accent-color;
+            }
+        }
+    }
+
+    // ================= RESPONSIVE =================
+
+    @include lg {
+        height: 380px;
+    }
+
+    @include md {
+        flex-direction: column;
+        height: auto;
+
+        .smallImages {
+            flex-direction: row;
+            height: 100px;
+
+            img {
+                height: 100%;
+            }
+        }
+    }
+
+    @include sm {
+        .smallImages {
+            display: none;
+        }
+    }
+}
