@@ -54,3 +54,23 @@
         cursor: pointer;
     }
 }
+
+@include lg {
+    .filter {
+        flex-direction: column;
+
+        .bottom {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+}
+
+@include md {
+    .filter {
+        .bottom {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

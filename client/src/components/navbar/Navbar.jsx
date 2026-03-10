@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 function Navbar() {
   const [open, setOpen] = useState(false);
 
+  const user = true;
+
   return (
     <nav>
       <div className="left">
@@ -21,12 +23,28 @@ function Navbar() {
         <Link to="">Agents</Link>
       </div>
       <div className="right">
-        <Link href="">
-          <span>Sign in</span>
-        </Link>
-        <Link href="" className="register">
-          <span>Sign up</span>
-        </Link>
+        {user ? (
+          <div className="user">
+            <img
+              src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
+              alt=""
+            />
+            <span> Emma Martin</span>
+            <Link to="/profile" className="btn">
+              <div className="notification">3</div>
+              <span>Profile</span>
+            </Link>
+          </div>
+        ) : (
+          <>
+            <Link href="">
+              <span>Sign in</span>
+            </Link>
+            <Link href="" className="btn">
+              <span>Sign up</span>
+            </Link>
+          </>
+        )}
 
         <div className="menuicon" onClick={() => setOpen((prev) => !prev)}>
           <MenuIcon />

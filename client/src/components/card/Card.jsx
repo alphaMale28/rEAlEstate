@@ -21,6 +21,7 @@ function Card({ item }) {
           <span class="small">only 4 units left</span>
         </div>
       </Link>
+
       <div className="textContainer">
         <h2 className="title">
           <Link to={`/${item.id}`}>{item.title}</Link>
