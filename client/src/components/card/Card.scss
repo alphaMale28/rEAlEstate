@@ -156,3 +156,10 @@
         }
     }
 }
+
+@include lg {
+    .bottom {
+        display: flex;
+        flex-direction: column;
+    }
+}

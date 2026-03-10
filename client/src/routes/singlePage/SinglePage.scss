@@ -7,6 +7,7 @@
     .details {
         flex: 3;
         height: 100%;
+        overflow-y: auto;
 
         .property {
             border-radius: 10px;
@@ -48,19 +49,21 @@
                     }
 
                     .agentCard {
-                        padding: 20px;
-                        border-radius: 45px;
+                        padding: 10px;
+                        border-radius: 10px;
                         text-align: center;
-                        min-width: 180px;
+                        min-width: 150px;
                         margin-right: 15px;
                         background-color: $button-color;
+                        // background-color: $two-text-color;
+                        // background-color: #d3e8ee;
 
                         img {
                             width: 80px;
                             height: 80px;
                             border-radius: 50%;
                             object-fit: cover;
-                            margin-bottom: 10px;
+                            // margin-bottom: 10px;
                             border: 3px solid $accent-color;
                         }
 
@@ -93,6 +96,7 @@
         background-color: $primary-color;
         height: 100%;
         color: $text-color;
+        overflow: auto;
 
         .wrapper {
             margin: 0px 10px;
@@ -236,9 +240,18 @@
 
     @include lg {
         flex-direction: column;
+        height: 100vh;
+        overflow-y: auto;
 
         .features {
             order: -1;
+            margin-bottom: 30px;
+        }
+
+        .features,
+        .details {
+            height: max-content;
+            flex: none;
         }
     }
 
@@ -259,6 +272,6 @@
     }
 
     @include sm {
-        gap: 20px;
+        // gap: 20px;
     }
 }

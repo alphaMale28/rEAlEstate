@@ -20,14 +20,18 @@
         // }
     }
 
-    @include sm {
-        .textContainer {
-            margin-top: -15%;
-        }
-    }
+    // @include sm {
+    //     .textContainer {
+    //         margin-top: -15%;
+    //     }
+    // }
 
     .textContainer {
         flex: 3;
+
+        @include sm {
+            margin-top: -15%;
+        }
 
         .wrapper {
             height: 100%;

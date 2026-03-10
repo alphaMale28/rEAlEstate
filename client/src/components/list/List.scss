@@ -1,0 +1,7 @@
+@use "../../responsive.scss" as *;
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
