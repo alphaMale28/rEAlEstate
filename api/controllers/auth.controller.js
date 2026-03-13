@@ -3,10 +3,25 @@ import jwt from "jsonwebtoken";
 
 import prisma from "../lib/prisma.js";
 
+export const checkEmail = async (req, res) => {
+  const { email } = req.query;
+
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  return res.json({ exists: !!user });
+};
+
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (user) return res.status(409).json({ message: "Email already in use " });
     //   HASH THE PASSWORD
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -52,20 +67,20 @@ export const login = async (req, res) => {
 
     // res.setHeader("Set-Cookie", "test=" + "myValue").json("success");
 
-    const age = 1000 * 60 * 60 * 24 * 7;
-
     const token = jwt.sign(
       {
         id: user.id,
       },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: age },
+      { expiresIn: "7d" },
     );
+
+    const age = 1000 * 60 * 60 * 24 * 7;
 
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: age,
       })
       .status(200)
