@@ -1,0 +1,23 @@
+{
+  "name": "realestate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces": [
+    "api",
+    "client"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev": "concurrently \" npm run dev -w api\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14"
+  }
+}

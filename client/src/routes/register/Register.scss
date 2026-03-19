@@ -1,6 +1,6 @@
 @use "../../responsive.scss" as *;
 
-.login {
+.register {
     display: flex;
 
     .box {
@@ -14,7 +14,7 @@
         align-items: center;
         justify-content: center;
 
-        .loginBox {
+        .registerBox {
             width: 60%;
             height: 75%;
             display: flex;
@@ -72,7 +72,7 @@
 
                         input {
                             padding: 20px;
-                            width: 200%;
+                            width: 130%;
                             border-radius: 5px;
                             outline: none;
                         }
