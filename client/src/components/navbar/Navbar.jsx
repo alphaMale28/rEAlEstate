@@ -8,6 +8,16 @@ function Navbar() {
 
   const user = true;
 
+  function toTitleCase(str) {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
+  console.log(toTitleCase("emma martin"));
+
   return (
     <nav>
       <div className="left">
@@ -29,7 +39,8 @@ function Navbar() {
               src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
               alt=""
             />
-            <span> Emma Martin</span>
+            {/* <span> Emma Martin</span> */}
+            <span> {toTitleCase("emma martin")}</span>
             <Link to="/profile" className="btn">
               <div className="notification">3</div>
               <span>Profile</span>
@@ -37,11 +48,11 @@ function Navbar() {
           </div>
         ) : (
           <>
-            <Link href="">
-              <span>Sign in</span>
-            </Link>
-            <Link href="" className="btn">
+            <Link to="/register">
               <span>Sign up</span>
+            </Link>
+            <Link to="/login" className="btn">
+              <span>Sign in</span>
             </Link>
           </>
         )}
