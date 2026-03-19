@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "install:all": "npm install",
-    "dev": "concurrently \" npm run dev -w api\" \"npm run dev -w client\"",
+    "dev": "concurrently \"npm run dev -w api\" \"npm run dev -w client\"",
     "build": "npm run build -w client",
     "start": "npm run start -w api"
   },
