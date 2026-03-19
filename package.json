@@ -9,7 +9,7 @@
   "scripts": {
     "install:all": "npm install",
     "dev": "concurrently \" npm run dev -w api\" \"npm run dev -w client\"",
-    "build": "cd client && npm install && npm run build",
+    "build": "npm run build -w client",
     "start": "npm run start -w api"
   },
   "keywords": [],
