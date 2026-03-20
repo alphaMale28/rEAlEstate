@@ -1,4 +1,4 @@
-@use "../../responsive.scss" as *;
+@use "../../Responsive.scss" as *;
 
 .profilePage {
     display: flex;
@@ -44,6 +44,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 40px;
+
                 span {
                     display: flex;
                     align-items: center;
@@ -56,6 +57,16 @@
                     border-radius: 50%;
                     border: 2px solid $primary-color;
                     object-fit: cover;
+                }
+
+                button {
+                    width: 100px;
+                    padding: 12px 20px;
+                    border-radius: 5px;
+                    border: 0;
+                    background-color: $primary-color;
+                    color: #fff;
+                    cursor: pointer;
                 }
             }
         }
