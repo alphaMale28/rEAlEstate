@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import prisma from "../lib/prisma.js";
+import { ENV } from "../lib/env.js";
 
 export const checkEmail = async (req, res) => {
   const { email } = req.query;
@@ -64,7 +65,7 @@ export const login = async (req, res) => {
       {
         id: user.id,
       },
-      process.env.JWT_SECRET_KEY,
+      ENV.JWT_SECRET_KEY,
       { expiresIn: "7d" },
     );
 
@@ -75,7 +76,7 @@ export const login = async (req, res) => {
     return res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: ENV.NODE_ENV === "production",
         maxAge: age,
       })
       .status(200)
