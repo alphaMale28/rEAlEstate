@@ -1,7 +1,8 @@
 import { MenuIcon } from "lucide-react";
-import "./Navbar.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import "./navbar.scss";
 
 function Navbar() {
   const [open, setOpen] = useState(false);

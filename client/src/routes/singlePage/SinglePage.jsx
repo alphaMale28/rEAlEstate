@@ -2,7 +2,7 @@ import { SchoolIcon } from "lucide-react";
 import Map from "../../components/map/Map";
 import Slider from "../../components/slider/Slider";
 import { singlePostData } from "../../lib/dummydata";
-import "./SinglePage.scss";
+import "./singlePage.scss";
 
 const SinglePage = () => {
   return (

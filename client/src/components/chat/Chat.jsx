@@ -1,6 +1,6 @@
 import { RxCross2 } from "react-icons/rx";
 
-import "./Chat.scss";
+import "./chat.scss";
 
 function Chat() {
   return (

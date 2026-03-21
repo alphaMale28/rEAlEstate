@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 
-import "./Slider.scss";
-import { useState } from "react";
+import "./slider.scss";
 
 function Slider({ images }) {
   const [imageIndex, setImageIndex] = useState(null);
