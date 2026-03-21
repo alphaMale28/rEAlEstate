@@ -1,6 +1,6 @@
-import Card from "../../components/card/Card";
-import Filter from "../../components/filter/Filter";
-import Map from "../../components/map/Map";
+import Card from "../../components/card/card";
+import Filter from "../../components/filter/filter";
+import Map from "../../components/map/map";
 import { listData } from "../../lib/dummydata";
 import "./listPage.scss";
 

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import Chat from "../../components/chat/Chat";
-import List from "../../components/list/List";
+import Chat from "../../components/chat/chat";
+import List from "../../components/list/list";
 import axiosInstance from "../../lib/axios";
 
 import "./profilePage.scss";

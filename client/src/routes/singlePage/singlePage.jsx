@@ -1,6 +1,6 @@
 import { SchoolIcon } from "lucide-react";
 import Map from "../../components/map/Map";
-import Slider from "../../components/slider/Slider";
+import Slider from "../../components/slider/slider";
 import { singlePostData } from "../../lib/dummydata";
 import "./singlePage.scss";
 
