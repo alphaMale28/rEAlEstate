@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix api && npm install --prefix client --include=dev && npx prisma generate --prefix api && npm run build --prefix client",
+    "build": "npm install --prefix api && npm install --prefix client --include=dev && cd api && npx prisma generate && npm run build --prefix client",
     "start": "npm run start --prefix api"
   },
   "keywords": [],
