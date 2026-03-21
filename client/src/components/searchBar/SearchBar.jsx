@@ -17,7 +17,7 @@ function Searchbar() {
     setQuery((prev) => ({ ...prev, type: val }));
   };
   return (
-    <div className="searchBar">
+    <div className="searchbar">
       <div className="type">
         {types.map((type) => (
           <button
