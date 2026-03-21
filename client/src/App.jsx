@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HomePage from "./routes/homepage/homePage";
-import ListPage from "./routes/listpage/listPage";
+import HomePage from "./routes/homepage/homepage";
+import ListPage from "./routes/listpage/listpage";
 import Layout from "./routes/layout/layout";
-import SinglePage from "./routes/singlepage/singlePage";
-import ProfilePage from "./routes/profilepage/profilePage";
+import SinglePage from "./routes/singlepage/singlepage";
+import ProfilePage from "./routes/profilepage/profilepage";
 import Register from "./routes/register/register";
 import Login from "./routes/login/login";
 
