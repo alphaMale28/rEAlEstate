@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { SearchIcon } from "lucide-react";
 
-import "./searchBar.scss";
+import "./searchbar.scss";
 
 const types = ["For Sale", "For Rent"];
 
-function SearchBar() {
+function Searchbar() {
   const [query, setQuery] = useState({
     type: "For Sale",
     location: "",
@@ -61,4 +61,4 @@ function SearchBar() {
   );
 }
 
-export default SearchBar;
+export default Searchbar;
