@@ -1,6 +1,7 @@
 import { useState } from "react";
-import "./SearchBar.scss";
 import { SearchIcon } from "lucide-react";
+
+import "./searchBar.scss";
 
 const types = ["For Sale", "For Rent"];
 

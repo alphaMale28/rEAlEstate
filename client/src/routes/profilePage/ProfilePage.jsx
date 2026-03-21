@@ -4,7 +4,7 @@ import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import axiosInstance from "../../lib/axios";
 
-import "./ProfilePage.scss";
+import "./profilePage.scss";
 
 function ProfilePage() {
   const navigate = useNavigate();

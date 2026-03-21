@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import "./Card.scss";
+import "./card.scss";
 import {
   BathIcon,
   BedDoubleIcon,
