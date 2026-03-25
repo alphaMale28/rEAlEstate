@@ -1,13 +1,19 @@
 import { MenuIcon } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./navbar.scss";
+import { AuthContext } from "../../context/auth.context";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  // const [user, setUser] = useState(currentUser);
 
-  const user = true;
+  const { currentUser } = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   setUser = currentUser;
+  // }, [currentUser]);
 
   function toTitleCase(str) {
     return str
@@ -32,14 +38,11 @@ function Navbar() {
         <Link to="#">Agents</Link>
       </div>
       <div className="right">
-        {user ? (
+        {currentUser ? (
           <div className="user">
-            <img
-              src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
-              alt=""
-            />
+            <img src={currentUser.avatar || "/avatar.jpg"} alt="" />
             {/* <span> Emma Martin</span> */}
-            <span> {toTitleCase("emma martin")}</span>
+            <span>{toTitleCase(currentUser.username)}</span>
             <Link to="/profile" className="btn">
               <div className="notification">3</div>
               <span>Profile</span>
