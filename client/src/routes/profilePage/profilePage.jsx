@@ -1,18 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Chat from "../../components/chat/chat";
 import List from "../../components/list/list";
 import axiosInstance from "../../lib/axios";
 
 import "./profilePage.scss";
+import { useContext } from "react";
+import { AuthContext } from "../../context/auth.context";
 
 function ProfilePage() {
   const navigate = useNavigate();
 
+  const { updateUser, currentUser } = useContext(AuthContext);
+
   const handleLogout = async () => {
     try {
-      const res = await axiosInstance.post("/auth/logout");
-      localStorage.removeItem("user");
+      await axiosInstance.post("/auth/logout");
+      // localStorage.removeItem("user");
+      updateUser(null);
 
       navigate("/");
     } catch (error) {
@@ -34,21 +39,20 @@ function ProfilePage() {
         <div className="wrapper">
           <div className="title">
             <h1>User Information</h1>
-            <button>Update Profile</button>
+            <Link to="/profile/update">
+              <button>Update Profile</button>
+            </Link>
           </div>
           <div className="info">
             <span>
               Avatar:
-              <img
-                src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
-                alt=""
-              />
+              <img src={currentUser.avatar || "/avatar.jpg"} alt="" />
             </span>
             <span>
-              Username: <b>{toTitleCase("emma martin")}</b>
+              Username: <b>{toTitleCase(currentUser.username)}</b>
             </span>
             <span>
-              E-mail: <b>emmamartin@example.com</b>
+              E-mail: <b>{currentUser.email}</b>
             </span>
             <button onClick={handleLogout}>Log Out</button>
           </div>

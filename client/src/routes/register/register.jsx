@@ -64,7 +64,12 @@ function Register() {
             <div className="wrapper">
               <form onSubmit={handleSubmit}>
                 <h1>Create an Account</h1>
-                <input name="username" type="text" placeholder="User Name" />
+                <input
+                  name="username"
+                  type="text"
+                  placeholder="User Name"
+                  required
+                />
                 <input
                   name="email"
                   type="email"
@@ -73,8 +78,14 @@ function Register() {
                     setEmail(e.target.value);
                   }}
                   placeholder="Email"
+                  required
                 />
-                <input name="password" type="password" placeholder="Password" />
+                <input
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  required
+                />
 
                 <p>{message}</p>
 

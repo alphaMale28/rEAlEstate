@@ -1,17 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 
 import "./login.scss";
 import axiosInstance from "../../lib/axios";
+import { AuthContext } from "../../context/auth.context";
 
 function Login() {
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  const { updateUser } = useContext(AuthContext);
 
-  // useEffect = () => {
-  //   if (!username || !password) retrun;
-  // };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +19,7 @@ function Login() {
 
     const formData = new FormData(e.target);
 
-    // const username = formData.get("username").toLowerCase();
-    const username = formData.get("username");
+    const username = formData.get("username").toLowerCase();
     const password = formData.get("password");
 
     try {
@@ -30,7 +28,8 @@ function Login() {
         password,
       });
 
-      localStorage.setItem("user", JSON.stringify(res.data));
+      // localStorage.setItem("user", JSON.stringify(res.data));
+      updateUser(res.data);
 
       navigate("/");
     } catch (error) {
@@ -59,6 +58,7 @@ function Login() {
                   }}
                   type="text"
                   placeholder="User Name"
+                  required
                 />
                 <input
                   name="password"
@@ -67,6 +67,7 @@ function Login() {
                   }}
                   type="password"
                   placeholder="Password"
+                  required
                 />
                 <button>Sign in</button>
                 <p>{error}</p>
