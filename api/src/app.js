@@ -4,6 +4,7 @@ import cors from "cors";
 import path from "path";
 
 import authRoute from "./routes/auth.route.js";
+import userRoute from "./routes/user.route.js";
 import { ENV } from "./lib/env.js";
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 if (ENV.NODE_ENV === "production") {
   console.log("PRODUCTION MODE DELECTED: Serving frontend...");

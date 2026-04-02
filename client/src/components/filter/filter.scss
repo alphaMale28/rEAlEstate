@@ -30,10 +30,15 @@
         border: 1px solid #e0e0e0;
         border-radius: 5px;
         font-size: 14px;
+
+        &:focus {
+            border-color: #fece51;
+        }
     }
 
     .top {
-        input {
+        input,
+        select {
             width: 100%;
         }
     }
