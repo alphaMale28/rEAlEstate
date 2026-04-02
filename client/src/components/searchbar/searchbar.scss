@@ -54,11 +54,16 @@
                 gap: 2px;
             }
 
-            input {
+            input,
+            select {
                 height: 64px;
                 border: 0;
                 padding: 0px 10px;
                 width: 160px;
+
+                &:focus {
+                    border-color: #fece51;
+                }
 
                 @include xl {
                     width: 120px;

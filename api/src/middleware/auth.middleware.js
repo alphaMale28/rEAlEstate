@@ -1,19 +1,21 @@
 import jwt from "jsonwebtoken";
 
 import { ENV } from "../lib/env.js";
+import prisma from "../lib/prisma.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies.jwt;
+
     if (!token)
       return res
         .status(401)
-        .json({ message: "Unauthorized - No taken provided!" });
+        .json({ message: "Unauthorized - No token provided!" });
 
     const decode = jwt.verify(token, ENV.JWT_SECRET_KEY);
 
     const user = await prisma.user.findUnique({
-      where: { id: decode.userId },
+      where: { id: decode.id },
       omit: { password: true },
     });
 

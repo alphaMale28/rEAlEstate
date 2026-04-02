@@ -1,0 +1,57 @@
+import bcrypt from "bcrypt";
+
+import prisma from "../lib/prisma.js";
+
+export const updateUser = async (req, res) => {
+  const id = req.params.id;
+  const tokenUserId = req.user.id;
+
+  const { password, avatar, ...inputs } = req.body;
+
+  if (id !== tokenUserId) {
+    return res.status(403).json({ message: "Not Authorized!" });
+  }
+
+  try {
+    const dataToUpdate = { ...inputs };
+
+    if (password) {
+      dataToUpdate.password = await bcrypt.hash(password, 10);
+    }
+
+    if (avatar !== undefined) {
+      dataToUpdate.avatar = avatar;
+    }
+
+    const updateUser = await prisma.user.update({
+      where: { id },
+      data: dataToUpdate,
+    });
+
+    const { password: userPassword, ...rest } = updateUser;
+
+    return res.status(200).json(rest);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Failes to update user!" });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const id = req.params.id;
+  const tokenUserId = req.user.id;
+
+  if (id !== tokenUserId) {
+    return res.status(403).json({ message: "Not Authorized!" });
+  }
+
+  try {
+    await prisma.user.delete({
+      where: { id },
+    });
+    return res.status(200).json({ message: "User Deleted" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).status({ message: "Failed to delete user!" });
+  }
+};

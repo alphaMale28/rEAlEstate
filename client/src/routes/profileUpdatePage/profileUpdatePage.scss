@@ -1,4 +1,117 @@
 @use "../../responsive.scss" as *;
 
 .profileupdate {
+    display: flex;
+    height: 100%;
+
+    .formContainer {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+
+        .title {
+            display: flex;
+            justify-content: center;
+
+            h1 {
+                font-weight: 300;
+                margin-bottom: 20px;
+            }
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 400px; // Keeps the profile form focused and centered
+            margin: 100px 50px;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                    label {
+                        font-size: 14px;
+                        color: #555;
+                    }
+
+                    input,
+                    select {
+                        padding: 15px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        outline: none;
+                        font-size: 14px;
+
+                        &:focus {
+                            // border-color: teal;
+                            border-color: #fece51;
+                        }
+                    }
+                }
+
+                button {
+                    padding: 15px;
+                    border: none;
+                    background-color: $button-color;
+                    color: white;
+                    font-weight: bold;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    transition: opacity 0.2s ease;
+
+                    &:hover {
+                        opacity: 0.9; // Alternative to darkening
+                    }
+
+                    &:disabled {
+                        background-color: #ccc;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+
+    .sideContainer {
+        flex: 2;
+        background-color: $primary-color;
+        color: whitesmoke;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        .avatar {
+            width: 280px;
+            height: 300px;
+            // border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+// Mobile View
+@media (max-width: 768px) {
+    .profileupdate {
+        flex-direction: column-reverse;
+
+        .formContainer {
+            padding: 40px 20px;
+            .wrapper {
+                max-width: 100%;
+            }
+        }
+
+        .sideContainer {
+            padding: 40px 0;
+            height: auto;
+        }
+    }
 }

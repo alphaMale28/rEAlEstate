@@ -70,11 +70,16 @@
                             margin-bottom: 20px;
                         }
 
-                        input {
+                        input,
+                        select {
                             padding: 20px;
                             width: 200%;
                             border-radius: 5px;
                             outline: none;
+
+                            &:focus {
+                                border-color: #fece51;
+                            }
                         }
 
                         p {

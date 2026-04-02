@@ -1,0 +1,158 @@
+@use "../../responsive.scss" as *;
+
+// .newPostPage {
+//     display: flex;
+//     height: 100%;
+
+//     .formContainer {
+//         flex: 3;
+//         height: 100%;
+
+//         .title {
+//             display: flex;
+//             justify-content: center;
+
+//             h1 {
+//                 font-weight: 300;
+//                 margin-bottom: 20px;
+//             }
+//         }
+
+//         form {
+//             display: flex;
+//             justify-content: space-between;
+//             flex-wrap: wrap;
+//             gap: 20px;
+//         }
+//     }
+
+//     .sideContainer {
+//         flex: 2;
+//         background-color: $primary-color;
+//         color: whitesmoke;
+//     }
+// }
+
+.newPostPage {
+    display: flex;
+    height: 100%;
+
+    .formContainer {
+        flex: 3;
+        overflow-y: scroll;
+        // padding: 0px 50px 50px 0px;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $accent-color;
+            border-radius: 10px;
+        }
+
+        .title {
+            margin-bottom: 20px;
+            h1 {
+                font-weight: 300;
+                font-size: 28px;
+            }
+        }
+
+        .wrapper {
+            margin: 0px 10px;
+            form {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                .item {
+                    width: 30%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+
+                    label {
+                        font-size: 14px;
+                        color: #444;
+                    }
+
+                    input,
+                    select {
+                        padding: 12px;
+                        border-radius: 5px;
+                        border: 1px solid #ddd;
+                        font-size: 14px;
+                        outline: none;
+
+                        &:focus {
+                            border-color: #fece51;
+                        }
+                    }
+
+                    &.description {
+                        width: 100%;
+                        height: 150px; // Space for ReactQuill
+                        margin-bottom: 40px;
+                    }
+                }
+
+                .sendButton {
+                    width: 50%;
+                    padding: 15px;
+                    border: none;
+                    // background-color: teal;
+                    background-color: $button-color;
+                    color: white;
+                    font-weight: bold;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    transition: background-color 0.3s;
+
+                    &:hover {
+                        // background-color: darken(teal, 5%);
+                        background-color: #006666;
+                    }
+                }
+            }
+        }
+    }
+
+    .sideContainer {
+        flex: 2;
+        background-color: $primary-color;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding-top: 50px;
+
+        img {
+            width: 80%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+    .newPostPage {
+        flex-direction: column-reverse;
+        overflow-y: auto;
+
+        .formContainer {
+            padding: 20px;
+            .wrapper form .item {
+                width: 45%;
+            }
+        }
+
+        .sideContainer {
+            flex: none;
+            padding: 20px;
+        }
+    }
+}
