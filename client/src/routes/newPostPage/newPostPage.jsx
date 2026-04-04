@@ -1,6 +1,10 @@
+import { useState } from "react";
+
+import ImageUploadWidget from "../../components/imageUploadWidget/imageUploadWidget";
 import "./newPostPage.scss";
 
 function NewPostPage() {
+  const [images, setImages] = useState();
   return (
     <div className="newPostPage">
       <div className="formContainer">
@@ -124,6 +128,15 @@ function NewPostPage() {
           }}
           setState={setImages}
         /> */}
+        <ImageUploadWidget
+          uwConfig={{
+            CloudName: "alphaMale",
+            uploadPreset: "rEAlEstate",
+            multiple: true,
+            folder: "posts",
+          }}
+          setAvatar={setImages}
+        />
       </div>
     </div>
   );

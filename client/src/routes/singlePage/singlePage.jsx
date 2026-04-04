@@ -62,7 +62,7 @@ const SinglePage = () => {
               <div className="feature">
                 <img src="/fee.png" alt="" />
                 <div className="featureText">
-                  <span>Property Fees</span>
+                  <span>Income Policy</span>
                   <p>Must have 3x the rent in total household income</p>
                 </div>
               </div>

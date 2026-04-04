@@ -123,6 +123,36 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  price: 'price',
+  images: 'images',
+  address: 'address',
+  city: 'city',
+  bed: 'bed',
+  bath: 'bath',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  type: 'type',
+  property: 'property',
+  createdAt: 'createdAt',
+  userId: 'userId'
+};
+
+exports.Prisma.PostDetailScalarFieldEnum = {
+  id: 'id',
+  desc: 'desc',
+  utilities: 'utilities',
+  pet: 'pet',
+  income: 'income',
+  size: 'size',
+  school: 'school',
+  bus: 'bus',
+  restaurant: 'restaurant',
+  postId: 'postId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -132,10 +162,22 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.Type = exports.$Enums.Type = {
+  sale: 'sale',
+  rent: 'rent'
+};
 
+exports.Property = exports.$Enums.Property = {
+  apartment: 'apartment',
+  house: 'house',
+  condo: 'condo',
+  land: 'land'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Post: 'Post',
+  PostDetail: 'PostDetail'
 };
 
 /**

@@ -1,38 +1,5 @@
 @use "../../responsive.scss" as *;
 
-// .newPostPage {
-//     display: flex;
-//     height: 100%;
-
-//     .formContainer {
-//         flex: 3;
-//         height: 100%;
-
-//         .title {
-//             display: flex;
-//             justify-content: center;
-
-//             h1 {
-//                 font-weight: 300;
-//                 margin-bottom: 20px;
-//             }
-//         }
-
-//         form {
-//             display: flex;
-//             justify-content: space-between;
-//             flex-wrap: wrap;
-//             gap: 20px;
-//         }
-//     }
-
-//     .sideContainer {
-//         flex: 2;
-//         background-color: $primary-color;
-//         color: whitesmoke;
-//     }
-// }
-
 .newPostPage {
     display: flex;
     height: 100%;

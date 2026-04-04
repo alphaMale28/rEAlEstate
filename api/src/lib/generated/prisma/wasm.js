@@ -95,6 +95,36 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  price: 'price',
+  images: 'images',
+  address: 'address',
+  city: 'city',
+  bed: 'bed',
+  bath: 'bath',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  type: 'type',
+  property: 'property',
+  createdAt: 'createdAt',
+  userId: 'userId'
+};
+
+exports.Prisma.PostDetailScalarFieldEnum = {
+  id: 'id',
+  desc: 'desc',
+  utilities: 'utilities',
+  pet: 'pet',
+  income: 'income',
+  size: 'size',
+  school: 'school',
+  bus: 'bus',
+  restaurant: 'restaurant',
+  postId: 'postId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -104,10 +134,22 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.Type = exports.$Enums.Type = {
+  sale: 'sale',
+  rent: 'rent'
+};
 
+exports.Property = exports.$Enums.Property = {
+  apartment: 'apartment',
+  house: 'house',
+  condo: 'condo',
+  land: 'land'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Post: 'Post',
+  PostDetail: 'PostDetail'
 };
 /**
  * Create the Client
@@ -120,7 +162,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\hp\\WebDevelopment\\rEAlEstate\\api\\generated\\prisma",
+      "value": "C:\\Users\\hp\\WebDevelopment\\rEAlEstate\\api\\src\\lib\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -131,17 +173,21 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\hp\\WebDevelopment\\rEAlEstate\\api\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\hp\\WebDevelopment\\rEAlEstate\\api\\src\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
     "rootEnvPath": null,
-    "schemaEnvPath": "../../.env"
+    "schemaEnvPath": "../../../../.env"
   },
-  "relativePath": "../../prisma",
+  "relativePath": "../../../prisma",
   "clientVersion": "6.19.2",
   "engineVersion": "c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
   "datasourceNames": [
@@ -156,13 +202,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  email     String   @unique\n  username  String   @unique\n  password  String\n  avatar    String?\n  createdAt DateTime @default(now())\n}\n",
-  "inlineSchemaHash": "3b9ead5ec52a3000324c1de2364de5f7be0268de0e2a6607eed7a8b6caeb3554",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n  output        = \"../lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mongodb\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n  email     String   @unique\n  username  String   @unique\n  password  String\n  avatar    String?\n  createdAt DateTime @default(now())\n  posts     Post[]\n}\n\nmodel Post {\n  id         String      @id @default(auto()) @map(\"_id\") @db.ObjectId\n  title      String\n  price      Int\n  images     String[]\n  address    String\n  city       String\n  bed        Int\n  bath       Int\n  latitude   String\n  longitude  String\n  type       Type\n  property   Property\n  createdAt  DateTime    @default(now())\n  user       User        @relation(fields: [userId], references: [id])\n  userId     String      @db.ObjectId\n  postDetail PostDetail?\n}\n\nenum Type {\n  sale\n  rent\n}\n\nenum Property {\n  apartment\n  house\n  condo\n  land\n}\n\nmodel PostDetail {\n  id         String  @id @default(auto()) @map(\"_id\") @db.ObjectId\n  desc       String\n  utilities  String?\n  pet        String?\n  income     String?\n  size       Int?\n  school     Int?\n  bus        Int?\n  restaurant Int?\n  post       Post    @relation(fields: [postId], references: [id])\n  postId     String  @unique @db.ObjectId\n}\n",
+  "inlineSchemaHash": "116b073ceba09b060d5c47ca1a35b0c0dde564b7ed923b31c07429b12f92915f",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"_id\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"_id\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"posts\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToUser\"}],\"dbName\":null},\"Post\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"_id\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"images\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"city\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"bed\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bath\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"Type\"},{\"name\":\"property\",\"kind\":\"enum\",\"type\":\"Property\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PostToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postDetail\",\"kind\":\"object\",\"type\":\"PostDetail\",\"relationName\":\"PostToPostDetail\"}],\"dbName\":null},\"PostDetail\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"_id\"},{\"name\":\"desc\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"utilities\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pet\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"income\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"size\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"school\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bus\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"restaurant\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"post\",\"kind\":\"object\",\"type\":\"Post\",\"relationName\":\"PostToPostDetail\"},{\"name\":\"postId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

@@ -4,10 +4,12 @@ import { AuthContext } from "../../context/auth.context";
 import "./profileUpdatePage.scss";
 import axiosInstance from "../../lib/axios";
 import { useNavigate } from "react-router-dom";
+import ImageUploadWidget from "../../components/imageUploadWidget/imageUploadWidget";
 
 function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const [avatar, setAvatar] = useState(currentUser.avatar);
 
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ function ProfileUpdatePage() {
         username,
         email,
         password,
+        avatar,
       });
       updateUser(res.data);
       navigate("/profile");
@@ -71,21 +74,20 @@ function ProfileUpdatePage() {
       </div>
       <div className="sideContainer">
         <img
-          src={currentUser.avatar || "/avatar.jpg"}
+          src={avatar || currentUser.avatar || "/avatar.jpg"}
           alt=""
           className="avatar"
         />
-        {/* <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="avatar" /> */}
-        {/* <UploadWidget
+        <ImageUploadWidget
           uwConfig={{
-            cloudName: "lamadev",
-            uploadPreset: "estate",
+            cloudName: "alphaMale",
+            uploadPreset: "rEAlEstate",
             multiple: false,
             maxImageFileSize: 2000000,
             folder: "avatars",
           }}
-          setState={setAvatar}
-        /> */}
+          setAvatar={setAvatar}
+        />
       </div>
     </div>
   );
