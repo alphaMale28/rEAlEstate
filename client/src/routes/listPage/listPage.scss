@@ -6,7 +6,6 @@
 
     .listContainer {
         flex: 3;
-        // height: 100%;
 
         .wrapper {
             height: 100%;
@@ -26,8 +25,19 @@
                 border-radius: 10px;
             }
 
-            // scrollbar-width: thin;
-            // scrollbar-color: $accent-color transparent;
+            .loader {
+                animation: spin 1s linear infinite;
+                margin: auto;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
         }
     }
 
@@ -43,6 +53,23 @@
             height: 100%;
             border-radius: 10px;
             padding-top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .loader {
+                animation: spin 1s linear infinite;
+                color: aliceblue;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
         }
     }
 }

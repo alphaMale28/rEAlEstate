@@ -6,12 +6,24 @@ import axiosInstance from "../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import ImageUploadWidget from "../../components/imageUploadWidget/imageUploadWidget";
 
+const avatarUploadConfig = {
+  cloudName: "alphaMale",
+  uploadPreset: "rEAlEstate",
+  multiple: false,
+  maxImageFileSize: 2000000,
+  folder: "avatars",
+};
+
 function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [avatar, setAvatar] = useState(currentUser.avatar);
 
   const navigate = useNavigate();
+
+  const handleUpload = (url) => {
+    setAvatar(url);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,14 +91,8 @@ function ProfileUpdatePage() {
           className="avatar"
         />
         <ImageUploadWidget
-          uwConfig={{
-            cloudName: "alphaMale",
-            uploadPreset: "rEAlEstate",
-            multiple: false,
-            maxImageFileSize: 2000000,
-            folder: "avatars",
-          }}
-          setAvatar={setAvatar}
+          uwConfig={avatarUploadConfig}
+          onUpload={handleUpload}
         />
       </div>
     </div>

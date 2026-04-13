@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-
-import "./card.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import {
   BathIcon,
   BedDoubleIcon,
@@ -9,16 +8,51 @@ import {
   MessageSquareTextIcon,
 } from "lucide-react";
 
+import "./card.scss";
+import { AuthContext } from "../../context/auth.context";
+import axiosInstance from "../../lib/axios";
+
 function Card({ item }) {
+  const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const [isSaved, setIsSaved] = useState(item.savedPost.length > 0);
+  // const [isSaved, setIsSaved] = useState(!!item.savedPost);
+  const [loading, setLoading] = useState(false);
+
+  const handleSavedPost = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    if (loading) return;
+
+    setLoading(true);
+    const previousStatus = isSaved;
+    setIsSaved(!previousStatus);
+
+    try {
+      await axiosInstance.post("/users/save", { postId: item.id });
+    } catch (error) {
+      console.log(error);
+      setIsSaved(previousStatus);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="card">
       <Link to={`/${item.id}`} className="imageContainer">
-        <img src={item.img} alt="" />
-        <div class="overlay"></div>
-
-        <div class="vertical-text">
-          <span class="big">{item.bedroom} bedroom</span>
-          <span class="small">only 4 units left</span>
+        <img src={item.images[0]} alt="" />
+        <div className="overlay"></div>
+        <div className="vertical-text">
+          <span className="big">{item.city}</span>
+          <span className="small">
+            {item.property} for {item.type}
+          </span>
         </div>
       </Link>
 
@@ -35,20 +69,23 @@ function Card({ item }) {
           <div className="features">
             <div className="feature">
               <BedDoubleIcon />
-              <span>{item.bedroom} bedroom</span>
+              <span>{item.bed} bedroom</span>
             </div>
             <div className="feature">
               <BathIcon />
-              <span>{item.bathroom} bathroom</span>
+              <span>{item.bath} bathroom</span>
             </div>
           </div>
           <div className="icons">
-            <div className="icon">
-              <BookmarkIcon className="book" />
-            </div>
-            <div className="icon">
+            <button
+              className={`icon ${isSaved ? "saved" : ""}`}
+              onClick={handleSavedPost}
+            >
+              <BookmarkIcon />
+            </button>
+            <button className="icon">
               <MessageSquareTextIcon />
-            </div>
+            </button>
           </div>
         </div>
       </div>

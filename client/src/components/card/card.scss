@@ -146,12 +146,9 @@
                     background-color: lightgray;
                 }
 
-                // .book {
-                //     &:hover {
-                //         stroke: goldenrod;
-                //         fill: goldenrod;
-                //     }
-                // }
+                &.saved {
+                    background-color: #fece51;
+                }
             }
         }
     }

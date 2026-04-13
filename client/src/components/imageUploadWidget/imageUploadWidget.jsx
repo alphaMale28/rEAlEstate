@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const ImageUploadWidget = ({ uwConfig, setAvatar }) => {
+const ImageUploadWidget = ({ uwConfig, onUpload }) => {
   const uploadWidgetRef = useRef(null);
   const uploadButtonRef = useRef(null);
 
@@ -13,8 +13,7 @@ const ImageUploadWidget = ({ uwConfig, setAvatar }) => {
           (error, result) => {
             if (!error && result && result.event === "success") {
               console.log("Upload successful:", result.info);
-              //   setPublicId(result.info.public_id);
-              setAvatar(result.info.secure_url);
+              onUpload(result.info.secure_url);
             }
           },
         );
@@ -37,7 +36,7 @@ const ImageUploadWidget = ({ uwConfig, setAvatar }) => {
     };
 
     initializeUploadWidget();
-  }, [uwConfig, setAvatar]);
+  }, [uwConfig, onUpload]);
 
   return (
     <button

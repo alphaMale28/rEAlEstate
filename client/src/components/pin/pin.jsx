@@ -10,7 +10,7 @@ function Pin({ item }) {
         <Popup className="property-popup">
           <div className="popup-card">
             <div className="popup-image">
-              <img src={item.img} alt="Property" />
+              <img src={item.images[0]} alt="Property" />
               <span className="price">${item.price}</span>
             </div>
 

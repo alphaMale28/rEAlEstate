@@ -1,25 +1,46 @@
+import { Await, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
+import { LoaderIcon } from "lucide-react";
+
 import Card from "../../components/card/card";
 import Filter from "../../components/filter/filter";
 import Map from "../../components/map/map";
-import { listData } from "../../lib/dummydata";
+
 import "./listPage.scss";
 
 function ListPage() {
-  const data = listData;
+  const data = useLoaderData();
 
   return (
     <div className="listPage">
       <div className="listContainer">
         <div className="wrapper">
           <Filter />
-          {data.map((item) => (
-            <Card key={item.id} item={item} />
-          ))}
+
+          <Suspense fallback={<LoaderIcon className="loader" />}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error Loading posts!</p>}
+            >
+              {(postResponse) =>
+                postResponse.data.map((post) => (
+                  <Card key={post.id} item={post} />
+                ))
+              }
+            </Await>
+          </Suspense>
         </div>
       </div>
       <div className="mapContainer">
         <div className="wrapper">
-          <Map items={data} />
+          <Suspense fallback={<LoaderIcon className="loader" />}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error Loading posts!</p>}
+            >
+              {(postResponse) => <Map items={postResponse.data} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>
