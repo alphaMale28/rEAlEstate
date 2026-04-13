@@ -100,7 +100,7 @@
 
         .wrapper {
             margin: 0px 10px;
-            padding: 15px;
+            padding: 0px 15px;
             border-radius: 10px;
             margin-bottom: 20px;
         }
@@ -120,7 +120,7 @@
         .listVertical,
         .listHorizontal {
             display: flex;
-            gap: 5px;
+            gap: 10px;
             flex-wrap: wrap;
             border-radius: 10px;
         }
@@ -132,13 +132,12 @@
         .feature {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 10px;
             background-color: #e7e7e7;
-
-            padding: 6px;
+            padding: 6px 10px;
             border-radius: 12px;
             transition: 0.3s ease;
-            align-items: center;
+            // align-items: center;
 
             img {
                 width: 24px;
@@ -161,16 +160,17 @@
 
         .sizes {
             display: flex;
-            gap: 15px;
+            gap: 5px;
 
             .size {
                 flex: 1;
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                justify-content: center;
+                gap: 5px;
                 background-color: #e7e7e7;
                 color: #000;
-                padding: 12px;
+                padding: 17px 5px;
                 border-radius: 12px;
 
                 img {
@@ -196,7 +196,7 @@
             display: flex;
             gap: 15px;
 
-            button {
+            .savePost {
                 flex: 1;
                 display: flex;
                 align-items: center;
@@ -208,6 +208,12 @@
                 cursor: pointer;
                 font-weight: 500;
                 transition: 0.3s ease;
+                background: $button-color;
+                color: white;
+
+                &:hover {
+                    opacity: 0.8;
+                }
 
                 img {
                     width: 18px;
@@ -215,22 +221,8 @@
                     filter: brightness(0) invert(1);
                 }
 
-                &:first-child {
-                    background: $button-color;
-                    color: white;
-
-                    &:hover {
-                        opacity: 0.8;
-                    }
-                }
-
-                &:last-child {
-                    background: $button-color;
-                    color: white;
-
-                    &:hover {
-                        opacity: 0.8;
-                    }
+                &.saved {
+                    background-color: $notification-color;
                 }
             }
         }

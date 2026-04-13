@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 
 export const updateUser = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const tokenUserId = req.user.id;
 
   const { password, avatar, ...inputs } = req.body;
@@ -38,7 +38,7 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const tokenUserId = req.user.id;
 
   if (id !== tokenUserId) {
@@ -53,5 +53,39 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).status({ message: "Failed to delete user!" });
+  }
+};
+
+export const savePost = async (req, res) => {
+  const { postId } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const savedPost = await prisma.savedPost.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    if (savedPost) {
+      await prisma.savedPost.delete({
+        where: {
+          id: savedPost.id,
+        },
+      });
+
+      return res.status(200).json({ message: "Post removed from saved list!" });
+    }
+    await prisma.savedPost.create({
+      data: { userId, postId },
+    });
+
+    return res.status(200).json({ message: "Post saved!" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Failed to save Post!" });
   }
 };

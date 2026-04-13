@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { SearchIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import "./searchbar.scss";
 
-const types = ["For Sale", "For Rent"];
+const types = ["sale", "rent"];
 
 function Searchbar() {
   const [query, setQuery] = useState({
-    type: "For Sale",
-    location: "",
+    type: "sale",
+    city: "",
     minPrice: 0,
     maxPrice: 0,
   });
@@ -16,6 +17,13 @@ function Searchbar() {
   const switchType = (val) => {
     setQuery((prev) => ({ ...prev, type: val }));
   };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    setQuery((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  };
+
   return (
     <div className="searchbar">
       <div className="type">
@@ -29,13 +37,14 @@ function Searchbar() {
           </button>
         ))}
       </div>
-      <form action="">
+      <form>
         <div className="inputs">
           <input
             type="text"
-            name="location"
+            name="city"
             placeholder="City, Address"
             className="location"
+            onChange={handleChange}
           />
           <input
             type="number"
@@ -43,6 +52,7 @@ function Searchbar() {
             min={100}
             max={20000000}
             placeholder="Min Price"
+            onChange={handleChange}
           />
           <input
             type="number"
@@ -50,12 +60,17 @@ function Searchbar() {
             min={25000}
             max={20000000}
             placeholder="Max Price"
+            onChange={handleChange}
           />
         </div>
-        <button>
-          <SearchIcon />
-          Search
-        </button>
+        <Link
+          to={`/list?type=${query.type}&city=${query.city}&minPrice=${query.minPrice}&maxPrice=${query.maxPrice}`}
+        >
+          <button>
+            <SearchIcon />
+            Search
+          </button>
+        </Link>
       </form>
     </div>
   );

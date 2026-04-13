@@ -1,10 +1,86 @@
 import { useState } from "react";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 import ImageUploadWidget from "../../components/imageUploadWidget/imageUploadWidget";
 import "./newPostPage.scss";
+import axiosInstance from "../../lib/axios";
+import { useNavigate } from "react-router-dom";
+
+const postUploadConfig = {
+  cloudName: "alphaMale",
+  uploadPreset: "rEAlEstate",
+  multiple: true,
+  folder: "posts",
+};
 
 function NewPostPage() {
-  const [images, setImages] = useState();
+  const [content, setContent] = useState("");
+  const [images, setImages] = useState([]);
+  const [error, setError] = useState("");
+
+  const handleUpload = (url) => {
+    setImages((prev) => [...prev, url]);
+  };
+
+  const navigate = useNavigate();
+
+  const handleContentChange = (value) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = value;
+
+    let plainText = tempDiv.textContent || tempDiv.innerText || "";
+
+    // optional: clean extra spaces
+    plainText = plainText.replace(/\s+/g, " ").trim();
+
+    setContent(plainText);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const inputs = Object.fromEntries(formData);
+
+    try {
+      const postData = {
+        title: inputs.title,
+        price: parseInt(inputs.price),
+        address: inputs.address,
+        city: inputs.city,
+        bed: parseInt(inputs.bedroom),
+        bath: parseInt(inputs.bathroom),
+        latitude: inputs.latitude,
+        longitude: inputs.longitude,
+        type: inputs.type,
+        property: inputs.property,
+        images,
+      };
+
+      const postDetail = {
+        desc: content,
+        utilities: inputs.utilities,
+        pet: inputs.pet,
+        income: inputs.income,
+        size: parseInt(inputs.size),
+        school: parseInt(inputs.school),
+        bus: parseInt(inputs.bus),
+        restaurant: parseInt(inputs.restaurant),
+      };
+
+      const res = await axiosInstance.post("/posts", {
+        postData,
+        postDetail,
+      });
+
+      navigate("/" + res.data.id);
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    }
+  };
+
   return (
     <div className="newPostPage">
       <div className="formContainer">
@@ -12,16 +88,14 @@ function NewPostPage() {
           <h1>Add New Post</h1>
         </div>
         <div className="wrapper">
-          <form
-          //   onSubmit={handleSubmit}
-          >
+          <form onSubmit={handleSubmit}>
             <div className="item">
               <label htmlFor="title">Title</label>
               <input id="title" name="title" type="text" />
             </div>
             <div className="item">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" />
+              <input min={100} id="price" name="price" type="number" />
             </div>
             <div className="item">
               <label htmlFor="address">Address</label>
@@ -29,7 +103,13 @@ function NewPostPage() {
             </div>
             <div className="item description">
               <label htmlFor="desc">Description</label>
-              {/* <ReactQuill theme="snow" onChange={setValue} value={value} /> */}
+              <div className="quill-wrapper">
+                <ReactQuill
+                  theme="snow"
+                  value={content}
+                  onChange={handleContentChange}
+                />
+              </div>
             </div>
             <div className="item">
               <label htmlFor="city">City</label>
@@ -111,32 +191,23 @@ function NewPostPage() {
               <input min={0} id="restaurant" name="restaurant" type="number" />
             </div>
             <button className="sendButton">Update</button>
-            {/* {error && <span>error</span>} */}
+            {error && <span>{error}</span>}
           </form>
         </div>
       </div>
       <div className="sideContainer">
-        {/* {images.map((image, index) => (
-          <img src={image} key={index} alt="" />
-        ))} */}
-        {/* <UploadWidget
-          uwConfig={{
-            multiple: true,
-            cloudName: "lamadev",
-            uploadPreset: "estate",
-            folder: "posts",
-          }}
-          setState={setImages}
-        /> */}
-        <ImageUploadWidget
-          uwConfig={{
-            CloudName: "alphaMale",
-            uploadPreset: "rEAlEstate",
-            multiple: true,
-            folder: "posts",
-          }}
-          setAvatar={setImages}
-        />
+        <div className="wrapper">
+          <div className="image">
+            {images.map((image, index) => (
+              <img key={index} src={image} alt="" />
+            ))}
+          </div>
+
+          <ImageUploadWidget
+            uwConfig={postUploadConfig}
+            onUpload={handleUpload}
+          />
+        </div>
       </div>
     </div>
   );

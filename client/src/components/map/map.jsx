@@ -7,7 +7,11 @@ import Pin from "../pin/pin";
 function Map({ items }) {
   return (
     <MapContainer
-      center={[43.6548, -79.3884]}
+      center={
+        items.length === 1
+          ? [items[0].latitude, items[0].longitude]
+          : [43.6548, -79.3884]
+      }
       zoom={8}
       scrollWheelZoom={false}
       className="map"

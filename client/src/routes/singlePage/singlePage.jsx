@@ -1,37 +1,65 @@
-import { SchoolIcon } from "lucide-react";
+import { useContext, useState } from "react";
 import Map from "../../components/map/map";
 import Slider from "../../components/slider/slider";
-import { singlePostData } from "../../lib/dummydata";
+import axiosInstance from "../../lib/axios";
 import "./singlePage.scss";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
 
 const SinglePage = () => {
+  const post = useLoaderData();
+
+  console.log(post);
+
+  const [isSaved, setIsSaved] = useState(!!post.isSaved);
+  const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleSavedPost = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    const previousStatus = isSaved;
+    setIsSaved(!previousStatus);
+
+    try {
+      await axiosInstance.post("/users/save", { postId: post.id });
+    } catch (error) {
+      console.log(error);
+      setIsSaved(previousStatus);
+    }
+  };
+
   return (
     <div className="singlePage">
       {/* LEFT SECTION */}
       <div className="details">
         <div className="property">
           <div className="imageContainer">
-            <Slider images={singlePostData.images} />
+            <Slider images={post.images} />
           </div>
 
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{singlePostData.title}</h1>
-                <p className="location">{singlePostData.address}</p>
+                <h1>{post.title}</h1>
+                <p className="location">{post.address}</p>
 
-                <span className="price">$ {singlePostData.price}</span>
+                <span className="price">$ {post.price}</span>
               </div>
 
               <div className="agentCard">
-                <img src="/Sanil.png" alt="agent" />
-                <h3>John Doe</h3>
+                <img src={post.user.avatar || "/avatar.jpg"} alt="agent" />
+                <h3>{post.user.username}</h3>
                 <p>Real Estate Agent</p>
               </div>
             </div>
 
             <div className="bottom">
-              <p className="description">{singlePostData.description}</p>
+              <p className="description">{post.postDetail.desc}</p>
             </div>
           </div>
         </div>
@@ -47,7 +75,7 @@ const SinglePage = () => {
                 <img src="/utility.png" alt="" />
                 <div className="featureText">
                   <span>Utilities</span>
-                  <p>Renter is responsible</p>
+                  <p>{post.postDetail.utilities} is responsible</p>
                 </div>
               </div>
 
@@ -55,7 +83,7 @@ const SinglePage = () => {
                 <img src="/pet.png" alt="" />
                 <div className="featureText">
                   <span>Pet Policy</span>
-                  <p>Pets Allowed</p>
+                  <p>Pets {post.postDetail.pet}</p>
                 </div>
               </div>
 
@@ -63,7 +91,7 @@ const SinglePage = () => {
                 <img src="/fee.png" alt="" />
                 <div className="featureText">
                   <span>Income Policy</span>
-                  <p>Must have 3x the rent in total household income</p>
+                  <p>{post.postDetail.income}</p>
                 </div>
               </div>
             </div>
@@ -74,17 +102,17 @@ const SinglePage = () => {
             <div className="sizes">
               <div className="size">
                 <img src="/size.png" alt="" />
-                <span>{singlePostData.size} sqft</span>
+                <span>{post.postDetail.size} sqft</span>
               </div>
 
               <div className="size">
                 <img src="/bed.png" alt="" />
-                <span>{singlePostData.bedRooms} beds</span>
+                <span>{post.bed} bedrooms</span>
               </div>
 
               <div className="size">
                 <img src="/bath.png" alt="" />
-                <span>{singlePostData.bathroom} bathroom</span>
+                <span>{post.bath} bathrooms</span>
               </div>
             </div>
           </div>
@@ -96,7 +124,7 @@ const SinglePage = () => {
                 <img src="/school.png" alt="" />
                 <div className="featureText">
                   <span>School</span>
-                  <p>{singlePostData.school}m away</p>
+                  <p>{post.postDetail.school}m away</p>
                 </div>
               </div>
 
@@ -104,7 +132,7 @@ const SinglePage = () => {
                 <img src="/bus.png" alt="" />
                 <div className="featureText">
                   <span>Bus Stop</span>
-                  <p>{singlePostData.bus}m away</p>
+                  <p>{post.postDetail.bus}m away</p>
                 </div>
               </div>
 
@@ -112,7 +140,7 @@ const SinglePage = () => {
                 <img src="/restaurant.png" alt="" />
                 <div className="featureText">
                   <span>Restaurant</span>
-                  <p>{singlePostData.restaurant}m away</p>
+                  <p>{post.postDetail.restaurant}m away</p>
                 </div>
               </div>
             </div>
@@ -121,18 +149,22 @@ const SinglePage = () => {
           <div className="title">
             <p>Location</p>
             <div className="mapContainer">
-              <Map items={[singlePostData]} />
+              <Map items={[post]} />
             </div>
           </div>
 
           <div className="buttons">
-            <button>
+            <button className="savePost">
               <img src="/chat.png" alt="" />
               Send a Message
             </button>
-            <button>
+            <button
+              className={`savePost ${isSaved ? "saved" : ""}`}
+              onClick={handleSavedPost}
+              // style={{ backgroundColor: isSaved ? "#fece51" : "#1c77b0" }}
+            >
               <img src="/save.png" alt="" />
-              Save the Place
+              {isSaved ? "Place is saved" : "Save the Place"}
             </button>
           </div>
         </div>
