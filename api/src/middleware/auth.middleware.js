@@ -10,7 +10,7 @@ export const protectRoute = async (req, res, next) => {
     if (!token)
       return res
         .status(401)
-        .json({ message: "Unauthorized - No token provided!" });
+        .json({ message: "Unauthorized - No token provided" });
 
     const decode = jwt.verify(token, ENV.JWT_SECRET_KEY);
 
@@ -19,11 +19,11 @@ export const protectRoute = async (req, res, next) => {
       omit: { password: true },
     });
 
-    if (!user) return res.status(404).json({ message: "User not found!" });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     req.user = user;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized - Invalid token!" });
+    return res.status(401).json({ message: "Unauthorized - Invalid token" });
   }
 };

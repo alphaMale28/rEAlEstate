@@ -1,14 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Suspense, useContext } from "react";
+import { LoaderIcon } from "lucide-react";
 
 import Chat from "../../components/chat/chat";
 import List from "../../components/list/list";
 import axiosInstance from "../../lib/axios";
-
-import "./profilePage.scss";
-import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 
+import "./profilePage.scss";
+import Card from "../../components/card/card";
+
 function ProfilePage() {
+  const data = useLoaderData();
+
+  console.log(data);
+
   const navigate = useNavigate();
 
   const { updateUser, currentUser } = useContext(AuthContext);
@@ -62,11 +68,26 @@ function ProfilePage() {
               <button>Create New List</button>
             </Link>
           </div>
-          <List />
+          <Suspense fallback={<LoaderIcon className="loader" />}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error Loading Posts!</p>}
+            >
+              {(postResponse) => <List posts={postResponse.data.userPosts} />}
+            </Await>
+          </Suspense>
+
           <div className="title">
             <h1>Saved List</h1>
           </div>
-          <List />
+          <Suspense fallback={<LoaderIcon className="loader" />}>
+            <Await
+              resolve={data.postResponse}
+              errorElement={<p>Error Loading Posts!</p>}
+            >
+              {(postResponse) => <List posts={postResponse.data.savePosts} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
 

@@ -13,12 +13,13 @@ import { AuthContext } from "../../context/auth.context";
 import axiosInstance from "../../lib/axios";
 
 function Card({ item }) {
+  console.log(item);
   const { currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const [isSaved, setIsSaved] = useState(item.savedPost.length > 0);
-  // const [isSaved, setIsSaved] = useState(!!item.savedPost);
+  const [isSaved, setIsSaved] = useState(item.savedPost?.length > 0);
+  // const [isSaved, setIsSaved] = useState(!!item.savedPost?.length);
   const [loading, setLoading] = useState(false);
 
   const handleSavedPost = async () => {

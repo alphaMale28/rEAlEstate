@@ -19,3 +19,10 @@ export const ListPageLoader = async ({ request, params }) => {
     postResponse: postPromise,
   };
 };
+
+export const ProfilePageLoader = async () => {
+  const postPromise = axiosInstance("/users/profilePosts");
+  return {
+    postResponse: postPromise,
+  };
+};
