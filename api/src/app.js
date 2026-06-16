@@ -23,14 +23,15 @@ app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
-app.use("api/chats", chatRoute);
+app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
 if (ENV.NODE_ENV === "production") {
   console.log("PRODUCTION MODE DELECTED: Serving frontend...");
   app.use(express.static(path.join(__dirname, "../client/dist")));
 
-  app.get(/.*/, (_, res) => {
+  app.get("*", (_, res) => {
+    // app.get(/.*/, (_, res) => {
     return res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 }
