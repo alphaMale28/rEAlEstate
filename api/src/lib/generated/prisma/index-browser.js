@@ -120,7 +120,8 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   avatar: 'avatar',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  chatIDs: 'chatIDs'
 };
 
 exports.Prisma.PostScalarFieldEnum = {
@@ -160,6 +161,22 @@ exports.Prisma.SavedPostScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id',
+  userIDs: 'userIDs',
+  createdAt: 'createdAt',
+  seenBy: 'seenBy',
+  lastMessage: 'lastMessage'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  userId: 'userId',
+  chatId: 'chatId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -185,7 +202,9 @@ exports.Prisma.ModelName = {
   User: 'User',
   Post: 'Post',
   PostDetail: 'PostDetail',
-  SavedPost: 'SavedPost'
+  SavedPost: 'SavedPost',
+  Chat: 'Chat',
+  Message: 'Message'
 };
 
 /**

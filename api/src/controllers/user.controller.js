@@ -9,7 +9,7 @@ export const updateUser = async (req, res) => {
   const { password, avatar, ...inputs } = req.body;
 
   if (id !== tokenUserId) {
-    return res.status(403).json({ message: "Not Authorized!" });
+    return res.status(403).json({ message: "Not Authorized" });
   }
 
   try {
@@ -33,7 +33,7 @@ export const updateUser = async (req, res) => {
     return res.status(200).json(rest);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Failes to update user!" });
+    return res.status(500).json({ message: "Failes to update user" });
   }
 };
 
@@ -77,15 +77,42 @@ export const savePost = async (req, res) => {
         },
       });
 
-      return res.status(200).json({ message: "Post removed from saved list!" });
+      return res.status(200).json({ message: "Post removed from saved list" });
     }
     await prisma.savedPost.create({
       data: { userId, postId },
     });
 
-    return res.status(200).json({ message: "Post saved!" });
+    return res.status(200).json({ message: "Post saved successfully!" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Failed to save Post!" });
+    return res.status(500).json({ message: "Failed to save Post" });
+  }
+};
+
+export const profilePosts = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const userPosts = await prisma.post.findMany({
+      where: { userId },
+      include: {
+        savedPost: true,
+      },
+    });
+
+    const saved = await prisma.savedPost.findMany({
+      where: { userId },
+      include: {
+        post: true,
+      },
+    });
+
+    const savePosts = saved.map((item) => item.post);
+
+    return res.status(200).json({ userPosts, savePosts });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Failed to get profile Posts!" });
   }
 };

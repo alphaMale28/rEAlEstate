@@ -50,7 +50,7 @@ export const getPost = async (req, res) => {
       },
     });
 
-    if (!post) return res.status(404).json({ message: "Post not found!" });
+    if (!post) return res.status(404).json({ message: "Post not found" });
 
     let isSaved = false;
 
@@ -126,14 +126,14 @@ export const deletePost = async (req, res) => {
     });
 
     if (tokenUserId !== post.userId) {
-      return res.status(403).json({ message: "Not Authorized!" });
+      return res.status(403).json({ message: "Not Authorized" });
     }
 
     await prisma.post.delete({
       where: { id },
     });
 
-    return res.status(200).json({ message: "Post deleted!" });
+    return res.status(200).json({ message: "Post deleted" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Failed to Delete Post" });

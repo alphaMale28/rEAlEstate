@@ -27,11 +27,11 @@ export const register = async (req, res) => {
       },
     });
 
-    return res.status(201).json({ message: "User created successfully" });
+    return res.status(201).json({ message: "User created successfully!" });
   } catch (error) {
     console.log(error);
 
-    return res.status(500).json({ message: "Failed to create user!" });
+    return res.status(500).json({ message: "Failed to create user" });
   }
 };
 
@@ -43,12 +43,12 @@ export const login = async (req, res) => {
       where: { username },
     });
 
-    if (!user) return res.status(401).json({ message: "Invalid Cridentials!" });
+    if (!user) return res.status(401).json({ message: "Invalid Cridentials" });
 
     const isPasswordVaild = await bcrypt.compare(password, user.password);
 
     if (!isPasswordVaild)
-      return res.status(401).json({ message: "Invalid Credentials!" });
+      return res.status(401).json({ message: "Invalid Credentials" });
 
     generateToken(user.id, res);
 
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Failed to login!" });
+    return res.status(500).json({ message: "Failed to login" });
   }
 };
 
@@ -69,5 +69,5 @@ export const logout = async (_, res) => {
   return res
     .clearCookie("token")
     .status(200)
-    .json({ message: "Logout successful" });
+    .json({ message: "Logout successful!" });
 };
