@@ -23,17 +23,17 @@ app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
-app.use("api/chats", chatRoute);
+app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
-if (ENV.NODE_ENV === "production") {
-  console.log("PRODUCTION MODE DELECTED: Serving frontend...");
-  app.use(express.static(path.join(__dirname, "../client/dist")));
+// if (ENV.NODE_ENV === "production") {
+//   console.log("PRODUCTION MODE DELECTED: Serving frontend...");
+//   app.use(express.static(path.join(__dirname, "../client/dist")));
 
-  app.get(/.*/, (_, res) => {
-    return res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-  });
-}
+//   app.get(/.*/, (_, res) => {
+//     return res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+//   });
+// }
 
 app.listen(PORT, () => {
   console.log("Server is running in port", PORT);
