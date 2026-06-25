@@ -26,15 +26,6 @@ app.use("/api/posts", postRoute);
 app.use("api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
-if (ENV.NODE_ENV === "production") {
-  console.log("PRODUCTION MODE DELECTED: Serving frontend...");
-  app.use(express.static(path.join(__dirname, "../client/dist")));
-
-  app.get(/.*/, (_, res) => {
-    return res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-  });
-}
-
 app.listen(PORT, () => {
   console.log("Server is running in port", PORT);
 });
