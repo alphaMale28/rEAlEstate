@@ -8,6 +8,5 @@ const axiosInstance = axios.create({
         "https://realestate-s79a.onrender.com/api",
   withCredentials: true,
 });
-// console.log(import.meta.env.VITE_API_URL);
 
 export default axiosInstance;
