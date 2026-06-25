@@ -10,4 +10,6 @@ export const ENV = {
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY,
 
   CLIENT_URL: process.env.CLIENT_URL,
+
+  VITE_API_URL: process.env.VITE_API_URL,
 };
