@@ -6,14 +6,21 @@ export const updateUser = async (req, res) => {
   const { id } = req.params;
   const tokenUserId = req.user.id;
 
-  const { password, avatar, ...inputs } = req.body;
+  const { userName, email, password, avatar } = req.body;
 
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not Authorized" });
   }
 
   try {
-    const dataToUpdate = { ...inputs };
+    const dataToUpdate = {};
+
+    if (userName) {
+      dataToUpdate.username = userName.toLowerCase();
+    }
+    if (email) {
+      dataToUpdate.email = email.toLowerCase();
+    }
 
     if (password) {
       dataToUpdate.password = await bcrypt.hash(password, 10);
@@ -23,12 +30,12 @@ export const updateUser = async (req, res) => {
       dataToUpdate.avatar = avatar;
     }
 
-    const updateUser = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id },
       data: dataToUpdate,
     });
 
-    const { password: userPassword, ...rest } = updateUser;
+    const { password: userPassword, ...rest } = updatedUser;
 
     return res.status(200).json(rest);
   } catch (error) {

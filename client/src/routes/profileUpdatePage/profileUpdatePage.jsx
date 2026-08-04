@@ -5,6 +5,7 @@ import "./profileUpdatePage.scss";
 import axiosInstance from "../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import ImageUploadWidget from "../../components/imageUploadWidget/imageUploadWidget";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const avatarUploadConfig = {
   cloudName: "alphaMale",
@@ -15,37 +16,56 @@ const avatarUploadConfig = {
 };
 
 function ProfileUpdatePage() {
-  const { currentUser, updateUser } = useContext(AuthContext);
+  const { userAuth, updateProfile } = useAuthStore();
   const [error, setError] = useState("");
-  const [avatar, setAvatar] = useState(currentUser.avatar);
+
+  const [formData, setFormData] = useState({
+    userName: userAuth?.username || "",
+    email: userAuth?.email || "",
+    password: "",
+    avatar: "",
+  });
 
   const navigate = useNavigate();
 
   const handleUpload = (url) => {
-    setAvatar(url);
+    const newFormData = { ...formData, avatar: url };
+    setFormData(newFormData);
+
+    updateProfile(newFormData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const success = updateProfile(formData);
 
-    const { username, email, password } = Object.fromEntries(formData);
-
-    try {
-      const res = await axiosInstance.put(`/users/${currentUser.id}`, {
-        username,
-        email,
-        password,
-        avatar,
-      });
-      updateUser(res.data);
+    if (success) {
       navigate("/profile");
-    } catch (error) {
-      console.log(error);
-      setError(error.response.data.message);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const formData = new FormData(e.target);
+
+  //   const { username, email, password } = Object.fromEntries(formData);
+
+  //   try {
+  //     const res = await axiosInstance.put(`/users/${userAuth.id}`, {
+  //       username,
+  //       email,
+  //       password,
+  //       avatar,
+  //     });
+  //     updateUser(res.data);
+  //     navigate("/profile");
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError(error.response.data.message);
+  //   }
+  // };
 
   return (
     <div className="profileupdate">
@@ -58,24 +78,41 @@ function ProfileUpdatePage() {
             <div className="item">
               <label htmlFor="username">Username</label>
               <input
-                id="username"
-                name="username"
+                // id="username"
+                // name="username"
                 type="text"
-                defaultValue={currentUser.username}
+                value={formData.userName}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setFormData((prev) => ({ ...prev, userName: val }));
+                }}
               />
             </div>
             <div className="item">
               <label htmlFor="email">Email</label>
               <input
-                id="email"
-                name="email"
+                // id="email"
+                // name="email"
                 type="email"
-                defaultValue={currentUser.email}
+                value={formData.email}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setFormData((prev) => ({ ...prev, email: val }));
+                }}
               />
             </div>
             <div className="item">
               <label htmlFor="password">Password</label>
-              <input id="password" name="password" type="password" />
+              <input
+                // id="password"
+                // name="password"
+                type="password"
+                value={formData.password}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setFormData((prev) => ({ ...prev, password: val }));
+                }}
+              />
             </div>
             <button>
               <span>Update</span>
@@ -86,10 +123,11 @@ function ProfileUpdatePage() {
       </div>
       <div className="sideContainer">
         <img
-          src={avatar || currentUser.avatar || "/avatar.jpg"}
+          src={formData.avatar || userAuth.avatar || "/avatar.jpg"}
           alt=""
           className="avatar"
         />
+
         <ImageUploadWidget
           uwConfig={avatarUploadConfig}
           onUpload={handleUpload}

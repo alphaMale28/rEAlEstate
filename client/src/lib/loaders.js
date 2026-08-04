@@ -6,7 +6,6 @@ export const SinglePageLoader = async ({ request, params }) => {
 };
 
 export const ListPageLoader = async ({ request, params }) => {
-  //   const query = request.url.split("?")[1];
 
   const url = new URL(request.url);
   const query = url.search;

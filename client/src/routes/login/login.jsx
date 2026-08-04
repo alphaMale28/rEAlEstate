@@ -3,40 +3,32 @@ import { useContext, useState } from "react";
 
 import "./login.scss";
 import axiosInstance from "../../lib/axios";
-import { AuthContext } from "../../context/auth.context";
+import { useAuthStore } from "../../store/useAuthStore";
+import { LoaderIcon } from "lucide-react";
+import toast from "react-hot-toast";
 
 function Login() {
   const [error, setError] = useState("");
 
-  const { updateUser } = useContext(AuthContext);
+  const [formData, setFormData] = useState({
+    userName: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
+
+  const { login, isLoggingIn } = useAuthStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setError("");
+    const success = await login(formData);
 
-    const formData = new FormData(e.target);
-
-    const username = formData.get("username").toLowerCase();
-    const password = formData.get("password");
-
-    try {
-      const res = await axiosInstance.post("/auth/login", {
-        username,
-        password,
-      });
-
-      // localStorage.setItem("user", JSON.stringify(res.data));
-      updateUser(res.data);
-
+    if (success) {
       navigate("/");
-    } catch (error) {
-      console.log(error);
-      setError(error.response?.data?.message || "Something went wrong");
     }
   };
+
   return (
     <div className="login">
       <div className="box">
@@ -51,25 +43,31 @@ function Login() {
             <div className="wrapper">
               <form onSubmit={handleSubmit}>
                 <h1>Welcome back</h1>
+
                 <input
-                  name="username"
-                  onChange={() => {
-                    setError("");
-                  }}
                   type="text"
-                  placeholder="User Name"
                   required
-                />
-                <input
-                  name="password"
-                  onChange={() => {
-                    setError("");
+                  value={formData.userName}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setFormData((prev) => ({ ...prev, userName: val }));
                   }}
-                  type="password"
-                  placeholder="Password"
-                  required
+                  placeholder="User Name"
                 />
-                <button>Sign in</button>
+
+                <input
+                  type="password"
+                  required
+                  value={formData.password}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setFormData((prev) => ({ ...prev, password: val }));
+                  }}
+                  placeholder="Enter your password"
+                />
+                <button disabled={isLoggingIn}>
+                  {isLoggingIn ? <LoaderIcon className="loader" /> : "Sign in"}
+                </button>
                 <p>{error}</p>
                 <Link to="/register">{"Don't"} you have an account?</Link>
               </form>
