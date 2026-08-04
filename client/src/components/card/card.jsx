@@ -11,10 +11,11 @@ import {
 import "./card.scss";
 import { AuthContext } from "../../context/auth.context";
 import axiosInstance from "../../lib/axios";
+import { useAuthStore } from "../../store/useAuthStore";
 
 function Card({ item }) {
-  console.log(item);
   const { currentUser } = useContext(AuthContext);
+  const { userAuth } = useAuthStore();
 
   const navigate = useNavigate();
 

@@ -3,19 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./navbar.scss";
-import { AuthContext } from "../../context/auth.context";
+import { useAuthStore } from "../../store/useAuthStore";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  // const [user, setUser] = useState(currentUser);
 
-  const { currentUser } = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   setUser = currentUser;
-  // }, [currentUser]);
+  const { userAuth } = useAuthStore();
 
   function toTitleCase(str) {
+    if (!str) return "";
     return str
       .toLowerCase()
       .split(" ")
@@ -38,11 +34,11 @@ function Navbar() {
         <Link to="#">Agents</Link>
       </div>
       <div className="right">
-        {currentUser ? (
+        {userAuth ? (
           <div className="user">
-            <img src={currentUser.avatar || "/avatar.jpg"} alt="" />
+            <img src={userAuth.avatar || "/avatar.jpg"} alt="" />
             {/* <span> Emma Martin</span> */}
-            <span>{toTitleCase(currentUser.username)}</span>
+            <span>{toTitleCase(userAuth.username) || ""}</span>
             <Link to="/profile" className="btn">
               <div className="notification">3</div>
               <span>Profile</span>

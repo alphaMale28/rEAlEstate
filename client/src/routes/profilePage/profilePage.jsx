@@ -5,10 +5,10 @@ import { LoaderIcon } from "lucide-react";
 import Chat from "../../components/chat/chat";
 import List from "../../components/list/list";
 import axiosInstance from "../../lib/axios";
-import { AuthContext } from "../../context/auth.context";
+import Card from "../../components/card/card";
+import { useAuthStore } from "../../store/useAuthStore";
 
 import "./profilePage.scss";
-import Card from "../../components/card/card";
 
 function ProfilePage() {
   const data = useLoaderData();
@@ -17,18 +17,10 @@ function ProfilePage() {
 
   const navigate = useNavigate();
 
-  const { updateUser, currentUser } = useContext(AuthContext);
+  const { userAuth, logout } = useAuthStore();
 
-  const handleLogout = async () => {
-    try {
-      await axiosInstance.post("/auth/logout");
-      // localStorage.removeItem("user");
-      updateUser(null);
-
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
+  const handleLogout = () => {
+    logout();
   };
 
   function toTitleCase(str) {
@@ -52,13 +44,13 @@ function ProfilePage() {
           <div className="info">
             <span>
               Avatar:
-              <img src={currentUser.avatar || "/avatar.jpg"} alt="" />
+              <img src={userAuth.avatar || "/avatar.jpg"} alt="" />
             </span>
             <span>
-              Username: <b>{toTitleCase(currentUser.username)}</b>
+              Username: <b>{toTitleCase(userAuth.username)}</b>
             </span>
             <span>
-              E-mail: <b>{currentUser.email}</b>
+              E-mail: <b>{userAuth.email}</b>
             </span>
             <button onClick={handleLogout}>Log Out</button>
           </div>

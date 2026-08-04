@@ -14,15 +14,17 @@ export const checkEmail = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { userName, email, password } = req.body;
 
   try {
+    const lowerUsername = userName.toLowerCase();
+    const lowerEmail = email.toLowerCase();
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.user.create({
       data: {
-        username: username.toLowerCase(),
-        email: email.toLowerCase(),
+        username: lowerUsername,
+        email: lowerEmail,
         password: hashedPassword,
       },
     });
@@ -36,18 +38,20 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { userName, password } = req.body;
 
   try {
+    const lowerUsername = userName.toLowerCase();
+
     const user = await prisma.user.findUnique({
-      where: { username },
+      where: { username: lowerUsername },
     });
 
-    if (!user) return res.status(401).json({ message: "Invalid Cridentials" });
+    if (!user) return res.status(401).json({ message: "Invalid Credentials" });
 
-    const isPasswordVaild = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordVaild)
+    if (!isPasswordValid)
       return res.status(401).json({ message: "Invalid Credentials" });
 
     generateToken(user.id, res);
@@ -60,7 +64,7 @@ export const login = async (req, res) => {
       createdAt: user.createdAt,
     });
   } catch (error) {
-    console.log(error);
+    console.log("Login Error:", error);
     return res.status(500).json({ message: "Failed to login" });
   }
 };

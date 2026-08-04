@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { LoaderIcon } from "lucide-react";
 
 import "./register.scss";
+import { useAuthStore } from "../../store/useAuthStore";
 import axiosInstance from "../../lib/axios";
 
 function Register() {
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
+  const { register, isRegistering } = useAuthStore();
 
   useEffect(() => {
-    if (!email) return;
+    if (!formData.email) return;
 
     const timeout = setTimeout(async () => {
       try {
         const res = await axiosInstance.get("/auth/check-email", {
-          params: { email },
+          params: { email: formData.email },
         });
 
         setMessage(res.data.exists ? "* email is already registered!" : "");
@@ -26,27 +33,15 @@ function Register() {
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [email]);
+  }, [formData.email]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const success = await register(formData);
 
-    const username = formData.get("username");
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    try {
-      await axiosInstance.post("/auth/register", {
-        username,
-        email,
-        password,
-      });
-
+    if (success) {
       navigate("/login");
-    } catch (error) {
-      setMessage(error.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -65,31 +60,44 @@ function Register() {
               <form onSubmit={handleSubmit}>
                 <h1>Create an Account</h1>
                 <input
-                  name="username"
                   type="text"
-                  placeholder="User Name"
                   required
+                  value={formData.userName}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setFormData((prev) => ({ ...prev, userName: val }));
+                  }}
+                  placeholder="User Name"
                 />
                 <input
-                  name="email"
                   type="email"
-                  value={email}
+                  required
+                  value={formData.email}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    const val = e.target.value;
+                    setFormData((prev) => ({ ...prev, email: val }));
                   }}
                   placeholder="Email"
-                  required
                 />
                 <input
-                  name="password"
                   type="password"
-                  placeholder="Password"
                   required
+                  value={formData.password}
+                  onChange={(e) => {
+                    setFormData({ ...formData, password: e.target.value });
+                  }}
+                  placeholder="Enter your password"
                 />
 
                 <p>{message}</p>
 
-                <button disabled={message}>Sign up</button>
+                <button disabled={message || isRegistering}>
+                  {isRegistering ? (
+                    <LoaderIcon className="loader" />
+                  ) : (
+                    "Sign up"
+                  )}
+                </button>
 
                 <Link to="/login">already have an account</Link>
               </form>

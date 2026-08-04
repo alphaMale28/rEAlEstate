@@ -11,5 +11,6 @@ export const ENV = {
 
   CLIENT_URL: process.env.CLIENT_URL,
 
-  VITE_API_URL: process.env.VITE_API_URL,
+  ARCJET_KEY: process.env.ARCJET_KEY,
+  ARCJET_ENV: process.env.ARCJET_ENV,
 };
