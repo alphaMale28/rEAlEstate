@@ -13,8 +13,6 @@ import "./profilePage.scss";
 function ProfilePage() {
   const data = useLoaderData();
 
-  console.log(data);
-
   const navigate = useNavigate();
 
   const { userAuth, logout } = useAuthStore();

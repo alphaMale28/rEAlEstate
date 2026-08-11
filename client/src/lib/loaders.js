@@ -6,7 +6,6 @@ export const SinglePageLoader = async ({ request, params }) => {
 };
 
 export const ListPageLoader = async ({ request, params }) => {
-
   const url = new URL(request.url);
   const query = url.search;
 
@@ -25,3 +24,8 @@ export const ProfilePageLoader = async () => {
     postResponse: postPromise,
   };
 };
+
+// export const ProfilePageLoader = async () => {
+//   const res = await axiosInstance("/users/profilePosts");
+//   return res.data;
+// };

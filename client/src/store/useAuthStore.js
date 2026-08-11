@@ -32,6 +32,7 @@ export const useAuthStore = create(
           const res = await axiosInstance.post("/auth/register", data);
           set({ userAuth: res.data });
           toast.success("Account created successfully!");
+
           return true;
         } catch (error) {
           toast.error(error.response?.data?.message || "Something went wrong.");
@@ -85,6 +86,7 @@ export const useAuthStore = create(
           return true;
         } catch (error) {
           toast.error(error.response?.data?.message || "Something went wrong");
+
           return false;
         } finally {
           set({ isUpdatingProfile: false });
