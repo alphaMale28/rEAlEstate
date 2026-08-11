@@ -26,7 +26,7 @@ export const updateUser = async (req, res) => {
       dataToUpdate.password = await bcrypt.hash(password, 10);
     }
 
-    if (avatar !== undefined) {
+    if (avatar) {
       dataToUpdate.avatar = avatar;
     }
 
@@ -84,13 +84,13 @@ export const savePost = async (req, res) => {
         },
       });
 
-      return res.status(200).json({ message: "Post removed from saved list" });
+      return res.status(200).json({ message: "Removed from list" });
     }
     await prisma.savedPost.create({
       data: { userId, postId },
     });
 
-    return res.status(200).json({ message: "Post saved successfully!" });
+    return res.status(200).json({ message: "Saved in List" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Failed to save Post" });

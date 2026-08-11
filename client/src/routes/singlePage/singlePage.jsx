@@ -4,33 +4,30 @@ import Slider from "../../components/slider/slider";
 import axiosInstance from "../../lib/axios";
 import "./singlePage.scss";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/auth.context";
+import { useAuthStore } from "../../store/useAuthStore";
+import { usePostStore } from "../../store/usePostStore";
 
 const SinglePage = () => {
   const post = useLoaderData();
 
-  console.log(post);
-
   const [isSaved, setIsSaved] = useState(!!post.isSaved);
-  const { currentUser } = useContext(AuthContext);
+  const { userAuth } = useAuthStore();
+  const { savePost } = usePostStore();
 
   const navigate = useNavigate();
 
   const handleSavedPost = async () => {
-    if (!currentUser) {
+    if (!userAuth) {
       navigate("/login");
       return;
     }
 
+    const postId = post.id;
+
+    savePost({ postId });
+
     const previousStatus = isSaved;
     setIsSaved(!previousStatus);
-
-    try {
-      await axiosInstance.post("/users/save", { postId: post.id });
-    } catch (error) {
-      console.log(error);
-      setIsSaved(previousStatus);
-    }
   };
 
   return (

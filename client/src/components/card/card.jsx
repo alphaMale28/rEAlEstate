@@ -9,40 +9,32 @@ import {
 } from "lucide-react";
 
 import "./card.scss";
-import { AuthContext } from "../../context/auth.context";
 import axiosInstance from "../../lib/axios";
 import { useAuthStore } from "../../store/useAuthStore";
+import { usePostStore } from "../../store/usePostStore";
 
 function Card({ item }) {
-  const { currentUser } = useContext(AuthContext);
   const { userAuth } = useAuthStore();
+  const { savePost } = usePostStore();
+
+  const check = item.savedPost?.some((saved) => saved.userId === userAuth.id);
+  // const userID = item?.savedPost?.map((saved) => saved.userId);
 
   const navigate = useNavigate();
 
-  const [isSaved, setIsSaved] = useState(item.savedPost?.length > 0);
-  // const [isSaved, setIsSaved] = useState(!!item.savedPost?.length);
-  const [loading, setLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(check);
 
   const handleSavedPost = async () => {
-    if (!currentUser) {
+    if (!userAuth) {
       navigate("/login");
       return;
     }
 
-    if (loading) return;
+    const postId = item.id;
+    await savePost({ postId });
 
-    setLoading(true);
     const previousStatus = isSaved;
     setIsSaved(!previousStatus);
-
-    try {
-      await axiosInstance.post("/users/save", { postId: item.id });
-    } catch (error) {
-      console.log(error);
-      setIsSaved(previousStatus);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
@@ -79,12 +71,14 @@ function Card({ item }) {
             </div>
           </div>
           <div className="icons">
-            <button
-              className={`icon ${isSaved ? "saved" : ""}`}
-              onClick={handleSavedPost}
-            >
-              <BookmarkIcon />
-            </button>
+            {item.savedPost && (
+              <button
+                className={`icon ${isSaved ? "saved" : ""}`}
+                onClick={handleSavedPost}
+              >
+                <BookmarkIcon />
+              </button>
+            )}
             <button className="icon">
               <MessageSquareTextIcon />
             </button>
